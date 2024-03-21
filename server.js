@@ -12,30 +12,11 @@ app.use(express.json());
 // 開啟資料庫連線
 const db = new sqlite3.Database(':memory:'); // 在記憶體中建立 SQLite 資料庫，實際應用中應使用實體資料庫
 
-// 建立行事曆資料表
-db.serialize(() => {
-    db.run("CREATE TABLE IF NOT EXISTS calendars (id INTEGER PRIMARY KEY, year TEXT, url TEXT)");
-    // 插入示範資料
-    db.run("INSERT INTO calendars (year, url) VALUES ('111', 'https://oaa.ntcu.edu.tw/download.php?dir=archive&filename=b13794d5e9781a8fba9dc88f8cec28b9.pdf&title=111%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%A1%8C%E4%BA%8B%E6%9B%86')");
-    db.run("INSERT INTO calendars (year, url) VALUES ('112', 'https://oaa.ntcu.edu.tw/download.php?dir=archive&filename=785e9afb33543eef724bd79be5f668b7.pdf&title=112%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%A1%8C%E4%BA%8B%E6%9B%86')");
-});
-
 // 建立銀行資料表
 db.run("CREATE TABLE IF NOT EXISTS Bank (id INTEGER PRIMARY KEY, user TEXT, balance INTEGER)");
 
 // 設置 CORS
 app.use(cors());
-
-// 取得所有行事曆 URL
-app.get('/calendars', (req, res) => {
-    db.all("SELECT * FROM calendars", (err, rows) => {
-        if (err) {
-            res.status(500).send(err.message);
-        } else {
-            res.json(rows);
-        }
-    });
-});
 
 // 取得所有使用者資料
 app.get('/users', (req, res) => {
@@ -57,7 +38,7 @@ app.post('/insert', (req, res) => {
             return res.status(400).json({ error: "User and balance are required." });
         }
 
-        db.run("INSERT INTO Bank (user, balance) VALUES (?, ?)", [user, balance], function(err) {
+        db.run("INSERT INTO Bank (user, balance) VALUES (?, ?)", [user, balance], function (err) {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
