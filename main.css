@@ -1,0 +1,9 @@
+body {
+    display: grid;
+    place-items: center;
+}
+
+label,
+select {
+    font-size: 300%;
+}
