@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shop</title>
+        <link rel="stylesheet" href="shop.css">
+        <script
+            src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    </head>
+    <body>
+        <input type="number" />
+        <div id="qrcode"></div>
+        <script>
+            function generateQRCode(url) {
+            const qrcodeDiv = document.getElementById('qrcode');
+                qrcodeDiv.innerHTML = ''; // 清空先前的 QR code
+                // 使用 QRCode.js 生成 QR code
+                new QRCode(qrcodeDiv, {
+                    text: url,
+                    width: 500,
+                    height: 500
+                });
+            }
+            var account = "Alice";
+            var number = document.querySelector('input[type="number"]');
+            number.addEventListener('input', () => {
+                var value = number.value;
+                console.log(number.value);
+                url = `http://localhost:3000/${account}/${value}`
+                console.log(url);
+                generateQRCode(url);
+            });
+        </script>
+    </body>
+</html>
