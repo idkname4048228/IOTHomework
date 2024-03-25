@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="/register" method="post">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <div>
+                <input type="submit" value="Register">
+            </div>
+        </form>
+        
+        <!-- 返回登入介面的按鈕 -->
+        <button onclick="window.location.href='/login.html'">返回登入介面</button>
+    </div>
+    
+    <!-- 註冊結果訊息的區域 -->
+    <div id="registerMessage" style="display:none;"></div>
+</body>
+</html>

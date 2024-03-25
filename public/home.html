@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <h1>主選單</h1>
+    
+    <!-- 顯示當前使用者 -->
+    <div class="user-container" id="currentUser">當前使用者: Loading...</div>
+
+    <!-- 顯示當前金額 -->
+    <div class="balance-container" id="currentBalance">當前金額: Loading...</div>
+
+    <div class="button-container">
+        <button class="deposit" onclick="location.href='/deposit.html'">存款</button>
+        <button class="transfer" onclick="location.href='/transfer.html'">轉款</button>
+    </div>
+
+    <script src="home.js"></script>
+</body>
+</html>

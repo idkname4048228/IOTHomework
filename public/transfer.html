@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer</title>
+    <link rel="stylesheet" href="transfer.css">
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Transfer Funds</h2>
+        <div class="input-container">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount">
+        </div>
+        <div id="qrcode"></div>
+
+        <!-- 回到主選單按鈕 -->
+        <button onclick="window.location.href='/home.html'" class="back-btn">回到主選單</button>
+    </div>
+
+    <script src="transfer.js"></script>
+</body>
+</html>
