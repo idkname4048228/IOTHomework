@@ -15,7 +15,12 @@ domReady(function () {
 
 	// If found you qr code
 	function onScanSuccess(decodeText, decodeResult) {
-		alert("You Qr is : " + "decodeText: " + decodeText + "decodeResult " + decodeResult);
+		console.log(decodeText);
+		fetch(decodeText, { method: "POST" })
+			.then()
+			.catch(error => {
+				console.error('出事了', error);
+			});
 	}
 
 	let htmlscanner = new Html5QrcodeScanner(

@@ -1,3 +1,7 @@
+var account = "Alice";
+// 從後端獲取當前使用者
+
+
 function generateQRCode(url) {
     const qrcodeDiv = document.getElementById('qrcode');
     qrcodeDiv.innerHTML = ''; // 清空先前的 QR code
@@ -9,10 +13,24 @@ function generateQRCode(url) {
     });
 }
 
-var account = "Alice";
+var submit = document.getElementById('submit');
 var amountInput = document.getElementById('amount');
-amountInput.addEventListener('input', () => {
-    var value = amountInput.value;
-    url = `http://localhost:3000/${account}/${value}`
-    generateQRCode(url);
+submit.addEventListener('click', () => {
+    fetch('currentuser')
+        .then(response => response.json())
+        .then(data => {
+            if (data.username !== undefined) {
+                account = data.username;
+                var value = amountInput.value;
+                url = `http://localhost:3000/transfer/${account}/${value}`
+                generateQRCode(url);
+            } else {
+                document.getElementById('currentUser').textContent = '當前使用者: Unauthenticated';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching current user:', error);
+            document.getElementById('currentUser').textContent = '當前使用者: 資料取得失敗';
+        });
+
 });

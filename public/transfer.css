@@ -41,7 +41,27 @@ input[type="number"] {
 /* QR Code styling */
 #qrcode {
     margin-top: 20px;
-}/* ...原有的 CSS... */
+    display: grid;
+    place-items: center;
+}
+
+/* ...原有的 CSS... */
+
+#submit {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #008000ad;
+    color: #eee;
+}
+
+#submit:hover {
+    background-color: #008000;
+
+}
 
 .back-btn {
     margin-top: 20px;
