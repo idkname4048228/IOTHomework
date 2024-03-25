@@ -51,6 +51,51 @@ app.post('/insert', (req, res) => {
 });
 
 // 轉帳 user1 的錢轉給 user2
+app.post('/transfer/:user2/:money', (req, res) => {
+    const user1 = req.body.user1;
+    const { user2, money } = req.params;
+    // 查询 user1 和 user2 的余额
+    db.get("SELECT balance FROM Bank WHERE user = ?", user1, (err, rowUser1) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        db.get("SELECT balance FROM Bank WHERE user = ?", user2, (err, rowUser2) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+
+            // 检查 user1 和 user2 是否存在
+            if (!rowUser1 || !rowUser2) {
+                return res.status(404).json({ error: "User not found." });
+            }
+
+            // 检查 user1 的余额是否足够
+            if (rowUser1.balance < money) {
+                return res.status(400).json({ error: "Insufficient balance." });
+            }
+
+            // 开始转账
+            db.serialize(() => {
+                db.run("UPDATE Bank SET balance = balance - ? WHERE user = ?", [money, user1], (err) => {
+                    if (err) {
+                        return res.status(500).json({ error: err.message });
+                    }
+
+                    db.run("UPDATE Bank SET balance = balance + ? WHERE user = ?", [money, user2], (err) => {
+                        if (err) {
+                            return res.status(500).json({ error: err.message });
+                        }
+
+                        res.json({ message: "Transfer successful." });
+                    });
+                });
+            });
+        });
+    });
+});
+
+// 轉帳 user1 的錢轉給 user2
 app.post('/transfer/:user1/:user2/:money', (req, res) => {
     const { user1, user2, money } = req.params;
 
