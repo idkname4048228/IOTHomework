@@ -1,4 +1,4 @@
-fetch('/users')
+fetch('users')
     .then(response => response.json())
     .then(data => {
         const userList = document.getElementById('userList');

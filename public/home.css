@@ -27,8 +27,13 @@ body {
     color: #fff;
 }
 
-.button-container button.transfer {
+.button-container button.transfer  {
     background-color: #28a745;
+    color: #fff;
+}
+
+.button-container button.scanner  {
+    background-color: #f58a0f;
     color: #fff;
 }
 

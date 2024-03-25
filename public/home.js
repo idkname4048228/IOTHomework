@@ -1,5 +1,5 @@
 // 從後端獲取當前使用者
-fetch('/currentuser')
+fetch('currentuser')
     .then(response => response.json())
     .then(data => {
         if (data.username !== undefined) {
@@ -14,7 +14,7 @@ fetch('/currentuser')
     });
 
 // 從後端獲取當前金額
-fetch('/balance')
+fetch('balance')
     .then(response => response.json())
     .then(data => {
         if (data.balance !== undefined) {
