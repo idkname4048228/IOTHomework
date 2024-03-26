@@ -12,10 +12,18 @@
 <body>
     <div class="container">
         <h1>Scan QR Codes</h1>
+        <!-- 顯示當前使用者 -->
+    <div class="user-container" id="currentUser">當前使用者: Loading...</div>
+
+    <!-- 顯示當前金額 -->
+    <div class="balance-container" id="currentBalance">當前金額: Loading...</div>
+    <br>
         <div class="section">
             <div id="my-qr-reader"></div>
         </div>
         
+        <br>
+        <p>收款人: unknown 金額: unknown</p>/
         <!-- 回到主選單按鈕 -->
         <button onclick="window.location.href='/home.html'" class="back-btn">回到主選單</button>
     </div>

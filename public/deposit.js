@@ -1,3 +1,10 @@
+fetch('currentuser')
+    .then(response => {
+        if (!response.ok) {
+            window.location.href = '/login.html';
+        }
+    })
+
 function deposit() {
     const amount = document.getElementById('amount').value;
 

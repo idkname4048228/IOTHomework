@@ -5,7 +5,8 @@ fetch('currentuser')
         if (data.username !== undefined) {
             document.getElementById('currentUser').textContent = `當前使用者: ${data.username}`;
         } else {
-            document.getElementById('currentUser').textContent = '當前使用者: Unauthenticated';
+            window.location.href = '/login.html';
+            // document.getElementById('currentUser').textContent = '當前使用者: Unauthenticated';
         }
     })
     .catch(error => {

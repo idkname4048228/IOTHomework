@@ -1,6 +1,9 @@
-var account = "Alice";
-// 從後端獲取當前使用者
-
+fetch('currentuser')
+    .then(response => {
+        if (!response.ok) {
+            window.location.href = '/login.html';
+        }
+    })
 
 function generateQRCode(url) {
     const qrcodeDiv = document.getElementById('qrcode');
@@ -20,9 +23,10 @@ submit.addEventListener('click', () => {
         .then(response => response.json())
         .then(data => {
             if (data.username !== undefined) {
-                account = data.username;
+                var account = data.username;
                 var value = amountInput.value;
                 url = `http://localhost:3000/transfer/${account}/${value}`
+                console.log(url);
                 generateQRCode(url);
             } else {
                 document.getElementById('currentUser').textContent = '當前使用者: Unauthenticated';

@@ -80,3 +80,8 @@ video {
 .container .back-btn:hover {
     background-color: #bbb;
 }
+
+.balance-container, .user-container {
+    margin-top: 20px;
+    font-size: 24px;
+}
