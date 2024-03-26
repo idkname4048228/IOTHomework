@@ -224,50 +224,55 @@ app.post('/deposit', (req, res) => {
 });
 
 
-// 轉帳 user1 的錢轉給 user2
-app.post('/transfer/:user2/:money', (req, res) => {
-    const user1 = req.session.user;
-    const { user2, money } = req.params;
-    // 查询 user1 和 user2 的余额
-    db.get("SELECT balance FROM Bank WHERE user = ?", user1, (err, rowUser1) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
+    // 轉帳 user1 的錢轉給 user2
+    app.post('/transfer/:user2/:money', (req, res) => {
+        const user1 = req.session.user;
+        const { user2, money } = req.params;
+        // 檢查 user1 和 user2 是否為同一使用者
+        if (user1 === user2) {
+            return res.status(400).json({ error: "Cannot transfer money to the same user." });
         }
 
-        db.get("SELECT balance FROM Bank WHERE user = ?", user2, (err, rowUser2) => {
+        // 查询 user1 和 user2 的余额
+        db.get("SELECT balance FROM Bank WHERE user = ?", user1, (err, rowUser1) => {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
 
-            // 检查 user1 和 user2 是否存在
-            if (!rowUser1 || !rowUser2) {
-                return res.status(404).json({ error: "User not found." });
-            }
+            db.get("SELECT balance FROM Bank WHERE user = ?", user2, (err, rowUser2) => {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
 
-            // 检查 user1 的余额是否足够
-            if (rowUser1.balance < money) {
-                return res.status(400).json({ error: "Insufficient balance." });
-            }
+                // 检查 user1 和 user2 是否存在
+                if (!rowUser1 || !rowUser2) {
+                    return res.status(404).json({ error: "User not found." });
+                }
 
-            // 开始转账
-            db.serialize(() => {
-                db.run("UPDATE Bank SET balance = balance - ? WHERE user = ?", [money, user1], (err) => {
-                    if (err) {
-                        return res.status(500).json({ error: err.message });
-                    }
+                // 检查 user1 的余额是否足够
+                if (rowUser1.balance < money) {
+                    return res.status(400).json({ error: "Insufficient balance." });
+                }
 
-                    db.run("UPDATE Bank SET balance = balance + ? WHERE user = ?", [money, user2], (err) => {
+                // 开始转账
+                db.serialize(() => {
+                    db.run("UPDATE Bank SET balance = balance - ? WHERE user = ?", [money, user1], (err) => {
                         if (err) {
                             return res.status(500).json({ error: err.message });
                         }
 
-                        res.json({ message: "Transfer successful." });
+                        db.run("UPDATE Bank SET balance = balance + ? WHERE user = ?", [money, user2], (err) => {
+                            if (err) {
+                                return res.status(500).json({ error: err.message });
+                            }
+
+                            res.json({ success: true});
+                        });
                     });
                 });
             });
         });
     });
-});
 
 // 關閉資料庫連線
 process.on('SIGINT', () => {

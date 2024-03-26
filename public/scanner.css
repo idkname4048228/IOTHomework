@@ -66,3 +66,17 @@ video {
 	border: 1px solid #b2b2b2 !important;
 	border-radius: 0.25em;
 }
+.container .back-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ccc;
+    color: #000;
+}
+
+.container .back-btn:hover {
+    background-color: #bbb;
+}
