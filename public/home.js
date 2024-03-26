@@ -25,3 +25,28 @@ fetch('balance')
         console.error('Error fetching balance:', error);
         document.getElementById('currentBalance').textContent = '當前金額: 資料取得失敗';
     });
+
+// 登出功能
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    fetch('/logout', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console
+        if (data.success) {
+            alert('登出成功');
+            // 重新導向到登入頁面
+            window.location.href = '/login.html';
+        } else {
+            alert('登出失敗');
+        }
+    })
+    .catch(error => {
+        console.error('Error logging out:', error);
+        alert('登出失敗');
+    });
+});

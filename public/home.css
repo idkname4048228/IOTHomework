@@ -37,6 +37,11 @@ body {
     color: #fff;
 }
 
+.button-container button.logout {
+    background-color: #dc3545; /* 紅色背景 */
+    color: #fff; /* 白色文字 */
+}
+
 .button-container button:hover {
     opacity: 0.8;
 }

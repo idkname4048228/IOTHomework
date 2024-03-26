@@ -80,6 +80,28 @@ app.post('/login', (req, res) => {
     }
 });
 
+// 登出
+app.get('/logout', (req, res) => {
+    try {
+        // 檢查使用者是否已經登入
+        if (!req.session.user) {
+            return res.status(401).json({ error: "User not authenticated." });
+        }
+
+        // 移除使用者資訊從 session
+        req.session.destroy((err) => {
+            if (err) {
+                console.error("Error destroying session:", err);
+                return res.status(500).json({ error: "Internal server error." });
+            }
+
+            res.json({ success: true});
+        });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal server error." });
+    }
+});
 
 // 註冊一筆用戶資料
 app.post('/register', (req, res) => {
