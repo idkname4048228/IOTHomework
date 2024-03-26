@@ -18,8 +18,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 開啟資料庫連線
 const db = new sqlite3.Database(':memory:'); // 在記憶體中建立 SQLite 資料庫，實際應用中應使用實體資料庫
 
-// 建立銀行資料表
-db.run("CREATE TABLE IF NOT EXISTS Bank (id INTEGER PRIMARY KEY, user TEXT, passwd TEXT, balance INTEGER)");
+db.serialize(() => {
+    // 建立銀行資料表
+    db.run("CREATE TABLE IF NOT EXISTS Bank (id INTEGER PRIMARY KEY, user TEXT, passwd TEXT, balance INTEGER)");
+    // 插入示範資料
+    db.run("INSERT INTO Bank (user, passwd, balance) VALUES ('Alice', '123', 10000)");
+    db.run("INSERT INTO Bank (user, passwd, balance) VALUES ('Bob', '123', 10000)");
+});
+
+
+
 
 // 設置 CORS
 app.use(cors());
