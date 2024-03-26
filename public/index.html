@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <script>
+            fetch('currentuser')
+        .then(response => {
+            if (!response.ok) {
+                window.location.href = '/login.html';
+            } else {
+                window.location.href = '/home.html';
+            }
+        })
+    </script>
+</body>
+</html>
